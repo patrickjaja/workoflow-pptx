@@ -1,0 +1,30 @@
+{
+  "name": "pptx-generator-api",
+  "version": "1.0.0",
+  "description": "REST API for generating PowerPoint presentations using PptxGenJS",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pptx",
+    "powerpoint",
+    "api",
+    "rest",
+    "generator"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "pptxgenjs": "^4.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
