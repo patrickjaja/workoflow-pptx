@@ -1,0 +1,447 @@
+openapi: 3.0.3
+info:
+  title: PPTX Generator API
+  description: REST API for generating PowerPoint presentations programmatically
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+  license:
+    name: ISC
+    url: https://opensource.org/licenses/ISC
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+  - url: http://localhost:3001
+    description: Docker development server
+
+paths:
+  /health:
+    get:
+      summary: Health Check
+      description: Check if the API service is running and healthy
+      operationId: healthCheck
+      tags:
+        - System
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: healthy
+                timestamp: "2023-12-08T10:30:00.000Z"
+
+  /api/generate-pptx:
+    post:
+      summary: Generate PowerPoint Presentation
+      description: Generate a PowerPoint presentation from JSON configuration
+      operationId: generatePptx
+      tags:
+        - Presentation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PresentationRequest'
+            examples:
+              simple:
+                summary: Simple text presentation
+                value:
+                  title: "Simple Presentation"
+                  slides:
+                    - content:
+                        - type: "text"
+                          value: "Hello World!"
+                          options:
+                            x: "10%"
+                            y: "45%"
+                            w: "80%"
+                            fontSize: 48
+                            align: "center"
+              complex:
+                summary: Multi-slide with mixed content
+                value:
+                  title: "Company Report"
+                  slides:
+                    - background:
+                        color: "003366"
+                      content:
+                        - type: "text"
+                          value: "Annual Report 2023"
+                          options:
+                            x: 1
+                            y: 2
+                            w: 8
+                            h: 2
+                            fontSize: 44
+                            color: "FFFFFF"
+                            bold: true
+                            align: "center"
+                    - content:
+                        - type: "chart"
+                          value:
+                            type: "bar"
+                            data:
+                              - name: "2023"
+                                values: [45, 52, 61, 68]
+                            categories: ["Q1", "Q2", "Q3", "Q4"]
+                          options:
+                            x: 1
+                            y: 1.5
+                            w: 8
+                            h: 4
+                            showLegend: true
+                  options:
+                    author: "Jane Doe"
+                    company: "ACME Corporation"
+      responses:
+        '200':
+          description: PowerPoint file generated successfully
+          content:
+            application/vnd.openxmlformats-officedocument.presentationml.presentation:
+              schema:
+                type: string
+                format: binary
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+              description: Attachment with filename
+              example: 'attachment; filename="presentation.pptx"'
+        '400':
+          description: Bad request - Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid request"
+                message: "Slides array is required and must not be empty"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Failed to generate presentation"
+                message: "Internal processing error"
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy]
+        timestamp:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error type or category
+        message:
+          type: string
+          description: Detailed error message
+
+    PresentationRequest:
+      type: object
+      required:
+        - slides
+      properties:
+        title:
+          type: string
+          description: Title of the presentation
+          example: "My Presentation"
+        slides:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Slide'
+        options:
+          $ref: '#/components/schemas/PresentationOptions'
+
+    PresentationOptions:
+      type: object
+      properties:
+        author:
+          type: string
+          description: Author of the presentation
+          example: "John Doe"
+        company:
+          type: string
+          description: Company name
+          example: "ACME Corp"
+        subject:
+          type: string
+          description: Subject of the presentation
+          example: "Quarterly Report"
+        revision:
+          type: string
+          description: Revision number
+          example: "1"
+        layout:
+          type: string
+          description: Layout format (if supported)
+          example: "LAYOUT_16x9"
+
+    Slide:
+      type: object
+      properties:
+        background:
+          $ref: '#/components/schemas/Background'
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/SlideContent'
+        notes:
+          type: string
+          description: Speaker notes for the slide
+
+    Background:
+      type: object
+      properties:
+        color:
+          type: string
+          description: Background color in hex format
+          example: "FFFFFF"
+        image:
+          type: string
+          description: Background image URL or base64 data
+
+    SlideContent:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          type: string
+          enum: [text, image, shape, table, chart]
+          description: Type of content element
+        value:
+          oneOf:
+            - type: string
+              description: For text, image, or shape content
+            - type: array
+              description: For table content
+            - type: object
+              description: For chart content
+        options:
+          type: object
+          description: Styling and positioning options
+
+    TextOptions:
+      type: object
+      properties:
+        x:
+          type: number
+          description: X position
+          example: 1
+        y:
+          type: number
+          description: Y position
+          example: 1
+        w:
+          oneOf:
+            - type: number
+            - type: string
+          description: Width (number or percentage)
+          example: "80%"
+        h:
+          type: number
+          description: Height
+          example: 1
+        fontSize:
+          type: integer
+          description: Font size in points
+          example: 18
+        fontFace:
+          type: string
+          description: Font family
+          example: "Arial"
+        color:
+          type: string
+          description: Text color in hex format
+          example: "000000"
+        bold:
+          type: boolean
+          default: false
+        italic:
+          type: boolean
+          default: false
+        underline:
+          type: boolean
+          default: false
+        align:
+          type: string
+          enum: [left, center, right]
+          default: left
+        valign:
+          type: string
+          enum: [top, middle, bottom]
+          default: top
+        margin:
+          type: number
+          description: Text margin
+        fill:
+          type: object
+          description: Background fill options
+
+    ImageOptions:
+      type: object
+      properties:
+        x:
+          type: number
+          example: 1
+        y:
+          type: number
+          example: 1
+        w:
+          type: number
+          description: Width
+          example: 4
+        h:
+          type: number
+          description: Height
+          example: 3
+        hyperlink:
+          type: string
+          description: URL to link to
+        rounding:
+          type: boolean
+          description: Apply rounded corners
+
+    ShapeOptions:
+      type: object
+      properties:
+        x:
+          type: number
+          example: 1
+        y:
+          type: number
+          example: 1
+        w:
+          type: number
+          example: 3
+        h:
+          type: number
+          example: 3
+        fill:
+          type: object
+          properties:
+            color:
+              type: string
+              example: "0088CC"
+        line:
+          type: object
+          properties:
+            color:
+              type: string
+              example: "000000"
+            width:
+              type: number
+              example: 1
+
+    TableOptions:
+      type: object
+      properties:
+        x:
+          type: number
+          example: 1
+        y:
+          type: number
+          example: 1
+        w:
+          type: number
+          example: 8
+        fontSize:
+          type: integer
+          example: 14
+        border:
+          type: boolean
+          default: true
+        colW:
+          type: array
+          items:
+            type: number
+          description: Column widths
+        autoPage:
+          type: boolean
+          default: false
+
+    ChartData:
+      type: object
+      required:
+        - type
+        - data
+      properties:
+        type:
+          type: string
+          enum: [bar, line, pie, area, scatter, bubble]
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              values:
+                type: array
+                items:
+                  type: number
+              labels:
+                type: array
+                items:
+                  type: string
+        categories:
+          type: array
+          items:
+            type: string
+
+    ChartOptions:
+      type: object
+      properties:
+        x:
+          type: number
+          example: 1
+        y:
+          type: number
+          example: 1
+        w:
+          type: number
+          example: 8
+        h:
+          type: number
+          example: 4
+        showLegend:
+          type: boolean
+        showTitle:
+          type: boolean
+        title:
+          type: string
+        chartColors:
+          type: array
+          items:
+            type: string
+
+tags:
+  - name: System
+    description: System and health check endpoints
+  - name: Presentation
+    description: PowerPoint presentation generation endpoints
