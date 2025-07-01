@@ -8,6 +8,7 @@ A REST API service for generating PowerPoint presentations programmatically usin
 - Support for multiple slide types and content
 - Text, images, shapes, tables, and charts
 - Customizable styling and formatting
+- Slide master/layout support for consistent design
 - Docker support for easy deployment
 - Binary response for direct file download
 
@@ -112,6 +113,57 @@ Generates a PowerPoint presentation and returns it as a binary file.
 - Binary PPTX file
 
 ## Content Types
+
+### Slide Masters
+
+Slide masters allow you to define reusable layouts with consistent styling:
+
+```json
+{
+  "options": {
+    "slideMasters": [
+      {
+        "name": "MASTER_NAME",
+        "width": 10,
+        "height": 5.625,
+        "background": { "color": "003366" },
+        "objects": [
+          {
+            "placeholder": "title",
+            "text": "Title Placeholder",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 9,
+            "h": 1.5,
+            "options": {
+              "fontSize": 36,
+              "bold": true,
+              "color": "FFFFFF"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+To use a slide master, reference it in your slide:
+
+```json
+{
+  "masterName": "MASTER_NAME",
+  "content": [
+    {
+      "type": "text",
+      "value": "This text will appear in the title placeholder",
+      "options": {
+        "placeholder": "title"
+      }
+    }
+  ]
+}
+```
 
 ### Text
 ```json
@@ -239,6 +291,99 @@ curl -X POST http://localhost:3000/api/generate-pptx \
     ]
   }' \
   --output presentation.pptx
+```
+
+### Presentation with Slide Master
+
+```bash
+curl -X POST http://localhost:3000/api/generate-pptx \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Corporate Presentation",
+    "slides": [
+      {
+        "masterName": "CORPORATE_MASTER",
+        "content": [
+          {
+            "type": "text",
+            "value": "Welcome to ACME Corp",
+            "options": {
+              "placeholder": "title"
+            }
+          }
+        ]
+      },
+      {
+        "masterName": "CORPORATE_MASTER",
+        "content": [
+          {
+            "type": "text",
+            "value": "Our Vision",
+            "options": {
+              "placeholder": "title"
+            }
+          },
+          {
+            "type": "text",
+            "value": "• Innovation and Excellence\n• Customer First Approach\n• Sustainable Growth",
+            "options": {
+              "placeholder": "body"
+            }
+          }
+        ]
+      }
+    ],
+    "options": {
+      "author": "John Doe",
+      "company": "ACME Corporation",
+      "slideMasters": [
+        {
+          "name": "CORPORATE_MASTER",
+          "background": {
+            "color": "003366"
+          },
+          "objects": [
+            {
+              "placeholder": "title",
+              "text": "Title Placeholder",
+              "x": 0.5,
+              "y": 0.5,
+              "w": 9,
+              "h": 1.5,
+              "options": {
+                "fontSize": 40,
+                "bold": true,
+                "color": "FFFFFF",
+                "align": "center"
+              }
+            },
+            {
+              "placeholder": "body",
+              "x": 1,
+              "y": 2.5,
+              "w": 8,
+              "h": 2.5,
+              "options": {
+                "fontSize": 20,
+                "color": "FFFFFF"
+              }
+            },
+            {
+              "shape": "rect",
+              "x": 0,
+              "y": 5.3,
+              "w": 10,
+              "h": 0.3,
+              "fill": {
+                "color": "FF6600"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }' \
+  --output corporate-presentation.pptx
 ```
 
 ### Multi-Slide with Mixed Content

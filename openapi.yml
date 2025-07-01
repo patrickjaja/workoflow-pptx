@@ -99,6 +99,59 @@ paths:
                   options:
                     author: "Jane Doe"
                     company: "ACME Corporation"
+              withMaster:
+                summary: Presentation with slide master
+                value:
+                  title: "Master Slide Demo"
+                  slides:
+                    - masterName: "CORPORATE_MASTER"
+                      content:
+                        - type: "text"
+                          value: "Welcome to Our Company"
+                          options:
+                            placeholder: "title"
+                    - masterName: "CORPORATE_MASTER"
+                      content:
+                        - type: "text"
+                          value: "Q4 Results"
+                          options:
+                            placeholder: "title"
+                        - type: "text"
+                          value: "• Revenue increased 25%\n• Customer base grew 40%\n• New products launched: 3"
+                          options:
+                            placeholder: "body"
+                  options:
+                    slideMasters:
+                      - name: "CORPORATE_MASTER"
+                        background:
+                          color: "003366"
+                        objects:
+                          - placeholder: "title"
+                            text: "Title Placeholder"
+                            x: 0.5
+                            y: 0.5
+                            w: 9
+                            h: 1.5
+                            options:
+                              fontSize: 36
+                              bold: true
+                              color: "FFFFFF"
+                              align: "center"
+                          - placeholder: "body"
+                            x: 0.5
+                            y: 2
+                            w: 9
+                            h: 3
+                            options:
+                              fontSize: 18
+                              color: "FFFFFF"
+                          - shape: "rect"
+                            x: 0
+                            y: 5.3
+                            w: 10
+                            h: 0.3
+                            fill:
+                              color: "FF6600"
       responses:
         '200':
           description: PowerPoint file generated successfully
@@ -199,6 +252,11 @@ components:
           type: string
           description: Layout format (if supported)
           example: "LAYOUT_16x9"
+        slideMasters:
+          type: array
+          description: Array of slide master definitions
+          items:
+            $ref: '#/components/schemas/SlideMaster'
 
     Slide:
       type: object
@@ -212,6 +270,9 @@ components:
         notes:
           type: string
           description: Speaker notes for the slide
+        masterName:
+          type: string
+          description: Name of the slide master to use for this slide
 
     Background:
       type: object
@@ -439,6 +500,82 @@ components:
           type: array
           items:
             type: string
+
+    SlideMaster:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Unique name for the slide master
+          example: "MASTER_SLIDE"
+        width:
+          type: number
+          description: Width of the slide master (default 10)
+          example: 10
+        height:
+          type: number
+          description: Height of the slide master (default 5.625)
+          example: 5.625
+        background:
+          $ref: '#/components/schemas/Background'
+        objects:
+          type: array
+          description: Array of objects to include in the master slide
+          items:
+            $ref: '#/components/schemas/MasterObject'
+
+    MasterObject:
+      type: object
+      properties:
+        placeholder:
+          type: string
+          description: Placeholder type (e.g., 'title', 'body', 'subtitle')
+          example: "title"
+        text:
+          type: string
+          description: Text content for the object
+        shape:
+          type: string
+          description: Shape type (e.g., 'rect', 'ellipse', 'roundRect')
+        image:
+          type: string
+          description: Image path or data URL
+        x:
+          type: number
+          description: X position
+          example: 0.5
+        y:
+          type: number
+          description: Y position
+          example: 0.5
+        w:
+          type: number
+          description: Width
+          example: 9
+        h:
+          type: number
+          description: Height
+          example: 1
+        options:
+          type: object
+          description: Additional styling options
+        fill:
+          type: object
+          properties:
+            color:
+              type: string
+              example: "0088CC"
+        line:
+          type: object
+          properties:
+            color:
+              type: string
+              example: "000000"
+            width:
+              type: number
+              example: 1
 
 tags:
   - name: System

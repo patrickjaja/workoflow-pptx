@@ -17,9 +17,19 @@ async function generatePresentation({ title, slides, options = {} }) {
     pptx.layout = options.layout;
   }
 
+  // Define slide masters if provided
+  if (options.slideMasters && Array.isArray(options.slideMasters)) {
+    for (const master of options.slideMasters) {
+      await defineSlideLayoutEx(pptx, master);
+    }
+  }
+
   // Process each slide
   for (const slideData of slides) {
-    const slide = pptx.addSlide();
+    // Add slide with optional master slide reference
+    const slide = slideData.masterName 
+      ? pptx.addSlide(slideData.masterName)
+      : pptx.addSlide();
 
     // Set slide background if provided
     if (slideData.background) {
@@ -190,6 +200,65 @@ function addChart(slide, chartData, options) {
   }));
 
   slide.addChart(chartType, chartDefinition, chartOptions);
+}
+
+async function defineSlideLayoutEx(pptx, masterDefinition) {
+  const { name, width, height, background, objects = [] } = masterDefinition;
+
+  if (!name) {
+    console.warn('Slide master definition missing required name property');
+    return;
+  }
+
+  const masterOptions = {
+    name,
+    width: width || 10,
+    height: height || 5.625,
+  };
+
+  if (background) {
+    masterOptions.background = background;
+  }
+
+  if (objects && objects.length > 0) {
+    masterOptions.objects = objects.map(obj => {
+      // Process each object in the master slide
+      const processedObj = { ...obj };
+      
+      // Handle placeholder objects
+      if (obj.placeholder) {
+        processedObj.placeholder = obj.placeholder;
+      }
+
+      // Handle text formatting
+      if (obj.text && obj.options) {
+        processedObj.text = obj.text;
+        processedObj.options = {
+          ...obj.options,
+          fontSize: obj.options.fontSize || config.text.defaultFontSize,
+          fontFace: obj.options.fontFace || config.text.defaultFont,
+          color: obj.options.color || config.text.defaultColor,
+        };
+      }
+
+      // Handle shapes
+      if (obj.shape) {
+        processedObj.shape = obj.shape;
+        if (obj.fill) processedObj.fill = obj.fill;
+        if (obj.line) processedObj.line = obj.line;
+      }
+
+      // Handle images
+      if (obj.image) {
+        processedObj.image = obj.image;
+      }
+
+      return processedObj;
+    });
+  }
+
+  // Define the slide master layout
+  pptx.defineLayout(masterOptions);
 }
 
 module.exports = {

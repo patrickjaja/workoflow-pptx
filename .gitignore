@@ -35,9 +35,6 @@ coverage/
 dist/
 build/
 
-# Generated files
-*.pptx
-
 # Temporary files
 tmp/
 temp/
