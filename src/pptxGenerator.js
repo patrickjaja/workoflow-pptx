@@ -154,7 +154,7 @@ function addTable(slide, tableData, options) {
     y: options.y || 1,
     w: options.w || 8,
     fontSize: options.fontSize || 14,
-    border: options.border !== false,
+    border: options.border || [],
     autoPage: options.autoPage || false,
   };
 
