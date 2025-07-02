@@ -34,7 +34,8 @@ async function generatePresentation({ title, slides, options = {} }) {
     // Set slide background if provided
     if (slideData.background) {
       slide.background = slideData.background;
-    } else if (config.slide.defaultBackground) {
+    } else if (!slideData.masterName && config.slide.defaultBackground) {
+      // Only apply default background if not using a master
       slide.background = config.slide.defaultBackground;
     }
 
@@ -81,27 +82,33 @@ async function addElementToSlide(slide, element) {
 }
 
 function addText(slide, text, options) {
-  const textOptions = {
-    x: options.x || 1,
-    y: options.y || 1,
-    w: options.w || '80%',
-    h: options.h || 1,
-    fontSize: options.fontSize || config.text.defaultFontSize,
-    fontFace: options.fontFace || config.text.defaultFont,
-    color: options.color || config.text.defaultColor,
-    bold: options.bold || false,
-    italic: options.italic || false,
-    underline: options.underline || false,
-    align: options.align || 'left',
-    valign: options.valign || 'top',
-    margin: options.margin || config.slide.defaultMargin,
-  };
+  // If placeholder is specified, use it
+  if (options.placeholder) {
+    slide.addText(text, { placeholder: options.placeholder });
+  } else {
+    // Regular text options
+    const textOptions = {
+      x: options.x || 1,
+      y: options.y || 1,
+      w: options.w || '80%',
+      h: options.h || 1,
+      fontSize: options.fontSize || config.text.defaultFontSize,
+      fontFace: options.fontFace || config.text.defaultFont,
+      color: options.color || config.text.defaultColor,
+      bold: options.bold || false,
+      italic: options.italic || false,
+      underline: options.underline || false,
+      align: options.align || 'left',
+      valign: options.valign || 'top',
+      margin: options.margin || config.slide.defaultMargin,
+    };
 
-  if (options.fill) {
-    textOptions.fill = options.fill;
+    if (options.fill) {
+      textOptions.fill = options.fill;
+    }
+
+    slide.addText(text, textOptions);
   }
-
-  slide.addText(text, textOptions);
 }
 
 function addImage(slide, imageData, options) {
@@ -154,9 +161,17 @@ function addTable(slide, tableData, options) {
     y: options.y || 1,
     w: options.w || 8,
     fontSize: options.fontSize || 14,
-    border: options.border || [],
     autoPage: options.autoPage || false,
   };
+
+  // Handle border option properly
+  if (options.border !== undefined) {
+    if (options.border === true) {
+      tableOptions.border = { pt: 1, color: '000000' };
+    } else if (typeof options.border === 'object') {
+      tableOptions.border = options.border;
+    }
+  }
 
   if (options.colW) {
     tableOptions.colW = options.colW;
@@ -211,7 +226,7 @@ async function defineSlideLayoutEx(pptx, masterDefinition) {
   }
 
   const masterOptions = {
-    name,
+    title: name,
     width: width || 10,
     height: height || 5.625,
   };
@@ -222,43 +237,66 @@ async function defineSlideLayoutEx(pptx, masterDefinition) {
 
   if (objects && objects.length > 0) {
     masterOptions.objects = objects.map(obj => {
-      // Process each object in the master slide
-      const processedObj = { ...obj };
+      const processedObj = {};
       
-      // Handle placeholder objects
+      // Handle placeholder objects according to PptxGenJS API
       if (obj.placeholder) {
-        processedObj.placeholder = obj.placeholder;
-      }
-
-      // Handle text formatting
-      if (obj.text && obj.options) {
-        processedObj.text = obj.text;
-        processedObj.options = {
-          ...obj.options,
-          fontSize: obj.options.fontSize || config.text.defaultFontSize,
-          fontFace: obj.options.fontFace || config.text.defaultFont,
-          color: obj.options.color || config.text.defaultColor,
+        processedObj.placeholder = {
+          options: {
+            name: obj.placeholder,
+            type: obj.type || 'body',
+            x: obj.x,
+            y: obj.y,
+            w: obj.w,
+            h: obj.h,
+            // Include styling options from the original object
+            fontSize: obj.options?.fontSize || config.text.defaultFontSize,
+            fontFace: obj.options?.fontFace || config.text.defaultFont,
+            color: obj.options?.color || config.text.defaultColor,
+            bold: obj.options?.bold,
+            italic: obj.options?.italic,
+            align: obj.options?.align,
+            valign: obj.options?.valign
+          },
+          text: obj.text || ''
         };
       }
-
-      // Handle shapes
-      if (obj.shape) {
-        processedObj.shape = obj.shape;
-        if (obj.fill) processedObj.fill = obj.fill;
-        if (obj.line) processedObj.line = obj.line;
+      // Handle regular text objects
+      else if (obj.text !== undefined && !obj.placeholder) {
+        processedObj.text = {
+          text: obj.text,
+          options: {
+            x: obj.x,
+            y: obj.y,
+            w: obj.w,
+            h: obj.h,
+            fontSize: obj.options?.fontSize || config.text.defaultFontSize,
+            fontFace: obj.options?.fontFace || config.text.defaultFont,
+            color: obj.options?.color || config.text.defaultColor,
+            bold: obj.options?.bold,
+            italic: obj.options?.italic,
+            align: obj.options?.align,
+            valign: obj.options?.valign
+          }
+        };
       }
-
-      // Handle images
-      if (obj.image) {
-        processedObj.image = obj.image;
+      // Handle shapes
+      else if (obj.shape === 'rect') {
+        processedObj.rect = {
+          x: obj.x,
+          y: obj.y,
+          w: obj.w,
+          h: obj.h,
+          fill: obj.fill
+        };
       }
 
       return processedObj;
     });
   }
 
-  // Define the slide master layout
-  pptx.defineLayout(masterOptions);
+  // Define the slide master
+  pptx.defineSlideMaster(masterOptions);
 }
 
 module.exports = {

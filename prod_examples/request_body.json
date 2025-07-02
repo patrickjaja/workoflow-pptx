@@ -1,0 +1,459 @@
+[
+  {
+    "slides": [
+      {
+        "background": {
+          "color": "FFFFFF"
+        },
+        "notes": "Speaker Notes",
+        "content": [
+          {
+            "type": "text",
+            "value": "Übersicht E-Commerce Systeme: Magento 2, Spryker & Shopware",
+            "options": {
+              "x": 0.5,
+              "y": 1,
+              "w": "90%",
+              "bold": true,
+              "fontFace": "Arial",
+              "fontSize": 18
+            }
+          },
+          {
+            "type": "text",
+            "value": "• Vorstellung der drei führenden E-Commerce-Plattformen: Magento 2, Spryker und Shopware\n• Fokus auf Stärken, typische Einsatzgebiete und Unterstützungsangebote durch valantic\n• Ziel: Übersicht und Vergleich zur Verbesserung Ihrer Entscheidungsgrundlage",
+            "options": {
+              "x": 0.5,
+              "y": 2,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          }
+        ]
+      },
+      {
+        "background": {
+          "color": "FFFFFF"
+        },
+        "notes": "Speaker Notes",
+        "content": [
+          {
+            "type": "text",
+            "value": "Magento 2 – Leistungsfähige und skalierbare E-Commerce-Plattform",
+            "options": {
+              "x": 0.5,
+              "y": 1,
+              "w": "90%",
+              "bold": true,
+              "fontFace": "Arial",
+              "fontSize": 18
+            }
+          },
+          {
+            "type": "text",
+            "value": "• Eine der weltweit führenden E-Commerce-Lösungen speziell für mittelständische und große Unternehmen\n• Ideal bei hohen Anforderungen an Individualisierung, Internationalisierung und Skalierbarkeit",
+            "options": {
+              "x": 0.5,
+              "y": 2,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Kernfunktionen:\n• Erweiterbar durch Extensions & Schnittstellen (APIs, ERP, PIM)\n• Moderne Headless-Architektur und Multi-Store-Fähigkeit\n• Hohe Performance, Stabilität, Multi Source Inventory\n• Flexibles Produkt- und Rechtemanagement (B2B-Module, rollenbasiertes Pricing)\n• Erweiterbarer Page Builder für Content Management\n• Leistungsfähige Suche (Elasticsearch, Algolia)",
+            "options": {
+              "x": 0.5,
+              "y": 3,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Praxisbeispiel: Projekt GGM Gastro\n• Migration zu Magento 2\n• SAP ERP Integration\n• Headless Frontend\n• Spezielle B2B-Features\n• Internationale Ausrichtung",
+            "options": {
+              "x": 0.5,
+              "y": 4,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Ansprechpartner bei valantic:\nAndy Jäger (Solution Architect)\nE-Mail: andy.jaeger@cec.valantic.com\nExperte für Magento, Shopware & PHP",
+            "options": {
+              "x": 0.5,
+              "y": 5,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          }
+        ]
+      },
+      {
+        "background": {
+          "color": "FFFFFF"
+        },
+        "notes": "Speaker Notes",
+        "content": [
+          {
+            "type": "text",
+            "value": "Spryker – Composable Commerce für maximale Flexibilität",
+            "options": {
+              "x": 0.5,
+              "y": 1,
+              "w": "90%",
+              "bold": true,
+              "fontFace": "Arial",
+              "fontSize": 18
+            }
+          },
+          {
+            "type": "text",
+            "value": "• State-of-the-Art Commerce-Plattform für individuelle und komplexe Geschäftsmodelle\n• Besonderer Fokus auf B2B, Multi-Channel und Marktplatz-Lösungen",
+            "options": {
+              "x": 0.5,
+              "y": 2,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Kernfunktionen:\n• Modularer, API-first Ansatz (Composable Commerce)\n• Schnelle Integration von Drittsystemen (ERP, PIM, CMS, Payment)\n• Headless & Microservice Architektur, Omnichannel-Ready\n• Plattform-as-a-Service für Skalierbarkeit und unterbrechungsfreie Upgrades\n• Komplexes Rechte- und Rollenkonzept, Multi-Frontend-Szenarien\n• Leistungsstarkes Produktinformationsmanagement und Variantenkonfiguration\n• Hervorragende Internationalisierung und Performance",
+            "options": {
+              "x": 0.5,
+              "y": 3,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Praxisbeispiel: Rollout einer skalierbaren Multishop-Lösung (z.B. Zolemba) mit Produktkonfigurator, komplexem Backend und Headless CMS-Integration",
+            "options": {
+              "x": 0.5,
+              "y": 4,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Ansprechpartner bei valantic:\nDennis Blümer (Backend Developer, Solution Architect, Spryker-Experte)\nE-Mail: dennis.bluemer@cec.valantic.com",
+            "options": {
+              "x": 0.5,
+              "y": 5,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          }
+        ]
+      },
+      {
+        "background": {
+          "color": "FFFFFF"
+        },
+        "notes": "Speaker Notes",
+        "content": [
+          {
+            "type": "text",
+            "value": "Shopware – Flexible Lösung für B2C und B2B Commerce",
+            "options": {
+              "x": 0.5,
+              "y": 1,
+              "w": "90%",
+              "bold": true,
+              "fontFace": "Arial",
+              "fontSize": 18
+            }
+          },
+          {
+            "type": "text",
+            "value": "Shopware 6 ist eine moderne, flexible E-Commerce-Plattform mit Fokus auf User Experience, Storytelling und effiziente B2B/B2C-Verwaltung\nGeeignet für wachstumsorientierte Händler",
+            "options": {
+              "x": 0.5,
+              "y": 2,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Kernfunktionen:\n• API-first Architektur & Integrationsfähigkeit (ERP, PIM, CRM, Payment)\n• Flexible Abbildung von B2C- & B2B-Prozessen auf einer Plattform\n• User-zentriertes, modernes Frontend, Erlebniswelten/Storytelling\n• Großer Plugin-Store, Erweiterungen & Entwickler-Community\n• Mandanten-, Multilanguage- & internationales Steuermodell\n• Echtzeit-Bestands- & Preisverwaltung\n• Gutes Preis-Leistungsverhältnis, kurze Time-to-Market",
+            "options": {
+              "x": 0.5,
+              "y": 3,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Praxisbeispiele: B2B/B2C-Plattformen für höffats, Thieme, HARTJE (Design, Schnittstellen, Multi-Channel, Skalierbarkeit)",
+            "options": {
+              "x": 0.5,
+              "y": 4,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "text",
+            "value": "Ansprechpartner bei valantic:\nIoan Agavriloaei (Tech Lead, Shopware 6 Certified Developer)\nE-Mail: ioan.agavriloaei@cec.valantic.com",
+            "options": {
+              "x": 0.5,
+              "y": 5,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          }
+        ]
+      },
+      {
+        "background": {
+          "color": "FFFFFF"
+        },
+        "notes": "Speaker Notes",
+        "content": [
+          {
+            "type": "text",
+            "value": "Systemvergleich – Magento 2, Spryker und Shopware",
+            "options": {
+              "x": 0.5,
+              "y": 1,
+              "w": "90%",
+              "bold": true,
+              "fontFace": "Arial",
+              "fontSize": 18
+            }
+          },
+          {
+            "type": "text",
+            "value": "• Überblick der wichtigsten E-Commerce-Systeme für mittlere und große Unternehmen\n• Fokus auf Zielgruppe, Architektur, Erweiterbarkeit, Internationalisierung, CMS-Funktionen, Performance, Integrationen, Customizing und Investitionsvolumen\n• Unterstützung bei Systemauswahl und Umsetzung durch valantic-Ansprechpartner",
+            "options": {
+              "x": 0.5,
+              "y": 2,
+              "w": "90%",
+              "bold": false,
+              "fontFace": "Arial",
+              "fontSize": 12
+            }
+          },
+          {
+            "type": "table",
+            "value": [
+              [
+                {
+                  "text": "Kriterium"
+                },
+                {
+                  "text": "Magento 2"
+                },
+                {
+                  "text": "Spryker"
+                },
+                {
+                  "text": "Shopware 6"
+                }
+              ],
+              [
+                {
+                  "text": "Zielgruppe"
+                },
+                {
+                  "text": "Große & mittlere Unternehmen (B2C/B2B, Multi-Brand)"
+                },
+                {
+                  "text": "Unternehmen mit komplexen, flexiblen Anforderungen, B2B & Marktplätze"
+                },
+                {
+                  "text": "Mittelstand bis Enterprise (B2C/B2B)"
+                }
+              ],
+              [
+                {
+                  "text": "Architektur"
+                },
+                {
+                  "text": "Monolithisch & Headless"
+                },
+                {
+                  "text": "Modular, Composable Commerce, API-first"
+                },
+                {
+                  "text": "API-first, Headless-ready"
+                }
+              ],
+              [
+                {
+                  "text": "Erweiterbarkeit"
+                },
+                {
+                  "text": "Sehr hoch, große Community"
+                },
+                {
+                  "text": "Extrem skalierbar, flexibel durch Module"
+                },
+                {
+                  "text": "Großer Plugin-Store, einfache Anpassung"
+                }
+              ],
+              [
+                {
+                  "text": "Internationalisierung"
+                },
+                {
+                  "text": "Exzellent, mehrere Stores, Sprachen, Währungen"
+                },
+                {
+                  "text": "Hervorragend, Multi-Frontend-/Shop-Konzepte"
+                },
+                {
+                  "text": "Sehr gut, Mandanten- & Sprachfähigkeit"
+                }
+              ],
+              [
+                {
+                  "text": "CMS-Funktionen"
+                },
+                {
+                  "text": "Page Builder, Content Staging"
+                },
+                {
+                  "text": "Headless CMS-Integration, Storyblok u.a."
+                },
+                {
+                  "text": "Eingebautes Erlebniswelten-Feature"
+                }
+              ],
+              [
+                {
+                  "text": "Performance/Skalierung"
+                },
+                {
+                  "text": "Hoch (Cloud-ready)"
+                },
+                {
+                  "text": "Sehr hoch, PaaS, Cloud-native Architektur"
+                },
+                {
+                  "text": "Hoch, flexibel skalierbar"
+                }
+              ],
+              [
+                {
+                  "text": "Integrationen"
+                },
+                {
+                  "text": "SAP, ERP, PIM, Drittsysteme (vielseitig)"
+                },
+                {
+                  "text": "Leichtgewichtig, vielfältige Schnittstellen"
+                },
+                {
+                  "text": "Viele Standard-Integrationen und APIs"
+                }
+              ],
+              [
+                {
+                  "text": "Customizing"
+                },
+                {
+                  "text": "Sehr mächtig, oft komplex"
+                },
+                {
+                  "text": "Modular, maximal flexibel"
+                },
+                {
+                  "text": "Einfach im Standard, sehr erweiterbar"
+                }
+              ],
+              [
+                {
+                  "text": "Investitionsvolumen"
+                },
+                {
+                  "text": "Eher hoch"
+                },
+                {
+                  "text": "Hoch (Enterprise), je nach Umfang"
+                },
+                {
+                  "text": "Mittel (günstiger Einstieg möglich)"
+                }
+              ]
+            ],
+            "options": {
+              "x": 1,
+              "y": 1,
+              "colW": [
+                2.5,
+                2.5,
+                3,
+                3
+              ]
+            }
+          },
+          {
+            "type": "chart",
+            "value": {
+              "type": "pie",
+              "data": [
+                {
+                  "name": "Marktanteile E-Commerce 2024",
+                  "values": [
+                    15,
+                    20,
+                    25,
+                    40
+                  ]
+                }
+              ],
+              "categories": [
+                "Spryker",
+                "Shopware",
+                "Magento 2",
+                "Shopify"
+              ]
+            },
+            "options": {
+              "x": 1,
+              "y": 1.5,
+              "w": 8,
+              "h": 4,
+              "showLegend": true
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
