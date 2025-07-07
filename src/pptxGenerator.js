@@ -291,6 +291,16 @@ async function defineSlideLayoutEx(pptx, masterDefinition) {
         };
       }
 
+      else if (obj.type === 'image') {
+        processedObj.image = {
+          x: obj.x,
+          y: obj.y,
+          w: obj.w,
+          h: obj.h,
+          data: obj.data, // Assuming data is a base64 string or file path
+        }
+      }
+
       return processedObj;
     });
   }
