@@ -194,6 +194,7 @@ function addChart(slide, chartData, options) {
     w: options.w || 8,
     h: options.h || 4,
     chartColors: options.chartColors || config.charts.defaultColors,
+    placeholder: options.placeholder || false,
   };
 
   if (options.showLegend !== undefined) {
